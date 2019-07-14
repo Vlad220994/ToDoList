@@ -3,7 +3,7 @@ import React from 'react';
 import ToDoListItem from '../ToDoListItem/ToDoListItem';
 import './ToDoList.css';
 
-const ToDoList = ({ todos }) => {
+const ToDoList = ({ todos, onDeleted }) => {
 
   const elements = todos.map((item) => {
     
@@ -11,7 +11,7 @@ const ToDoList = ({ todos }) => {
     
     return(
       <li key={ id } className="list-group-item">
-        <ToDoListItem { ...itemProps }/>
+        <ToDoListItem { ...itemProps } onDeleted={() => onDeleted(id)} />
       </li>
     );
   });

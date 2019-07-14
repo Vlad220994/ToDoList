@@ -12,3 +12,7 @@ button {
   font-weight: bold;
   color: steelblue;
 }
+
+.ToDoListItem.done .ToDoListItemLabel {
+  text-decoration: line-through;
+}

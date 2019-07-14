@@ -1,29 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './ToDoListItem.css';
 
-const ToDoListItem = ({ label, important = false }) => {
+export default class ToDoListItem extends Component {
   
-  const style = {
-    color: important ? 'steelblue' : 'black',
-    fontWeight: important ? 'bold' : 'normal'
+  state = {
+    done: false,
+    important: false
   }
 
-  return(
-    <span className="ToDoListItem">
-      <span 
-        className="ToDoListItemLabel" 
-        style={ style }>
-        { label }
-      </span>
-      <button type="button" className="btn btn-outline-success btn-sm float-right"> 
-        <i className="fa fa-trash-o" />
-      </button>
-      <button type="button" className="btn btn-outline-success btn-sm float-right"> 
-        <i className="fa fa-exclamation" />
-      </button>
-    </span>
-  );
-};
+  onMarkImportant = () => {
+    this.setState(({ important }) => {
+      return {
+        important: !important
+      }
+    });
+  }
 
-export default ToDoListItem;
+  onLabelClick = () => {
+    this.setState(({ done }) => {
+      return {
+        done: !done
+      }
+    });
+  } 
+
+  render() {
+
+    const { label, onDeleted } = this.props;
+    
+    const { done, important = false} = this.state;
+
+    let ToDoListItem = "ToDoListItem";
+
+    if (done) {
+      ToDoListItem += " done";
+    }
+
+    if (important) {
+      ToDoListItem += " important";
+    }
+
+    const style = {
+      color: important ? 'steelblue' : 'black',
+      fontWeight: important ? 'bold' : 'normal'
+    }
+    
+    return(
+      <span className={ ToDoListItem }>
+        <span 
+          className="ToDoListItemLabel" 
+          style={ style }
+          onClick={ this.onLabelClick }>
+          { label }
+        </span>
+        <button type="button" className="btn btn-outline-success btn-sm float-right" onClick={onDeleted}> 
+          <i className="fa fa-trash-o" />
+        </button>
+        <button type="button" className="btn btn-outline-success btn-sm float-right" onClick={this.onMarkImportant}> 
+          <i className="fa fa-exclamation" />
+        </button>
+      </span>
+    );
+  }
+}
