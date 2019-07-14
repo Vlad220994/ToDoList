@@ -1,0 +1,14 @@
+.ToDoListItemLabel {
+  line-height: 35px;
+  cursor: pointer;
+  user-select: none;
+}
+
+button {
+  width: 35px;
+}
+
+.ToDoListItem.important .ToDoListItemLabel {
+  font-weight: bold;
+  color: steelblue;
+}

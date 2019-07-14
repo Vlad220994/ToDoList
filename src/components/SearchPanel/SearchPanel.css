@@ -1,0 +1,16 @@
+.SearchPanel {
+  display: float;
+  float: left;
+  margin-left: 20px;
+}
+
+input {
+  width: 250px;
+  padding: 5px;
+}
+
+button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
