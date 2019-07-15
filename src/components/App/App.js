@@ -18,7 +18,7 @@ export default class App extends Component {
       { id: 2, label: 'Play Football', important: true },
       { id: 3, label: 'Sleep', important: false }
     ]
-  }
+  };
 
   deleteItem = (id) => {
     this.setState(({ toDoData}) => {
@@ -30,7 +30,7 @@ export default class App extends Component {
         toDoData: newToDoData
       }
     });
-  }
+  };
 
   addItem = (text) => {
 
@@ -47,7 +47,15 @@ export default class App extends Component {
         toDoData: newArr
       }
     });
-  }
+  };
+
+  onToggleDone = (id) => {
+    console.log("done", id);
+  };
+
+  onToggleImportant = (id) => {
+    console.log("important", id);
+  };
 
   render() {
     return(
@@ -55,7 +63,12 @@ export default class App extends Component {
         <AppHeader />
         <SearchPanel />
         <ItemStatusFilter />
-        <ToDoList todos = { this.state.toDoData } onDeleted={ this.deleteItem} />
+        <ToDoList 
+          todos = { this.state.toDoData } 
+          onDeleted={ this.deleteItem} 
+          onToggleDone={this.onToggleDone}
+          onToggleImportant={this.onToggleImportant} 
+        />
         <ItemAddForm onItemAdded={ this.addItem } />
       </div>
     );
