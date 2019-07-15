@@ -1,4 +1,8 @@
 .ItemAddForm button {
+  margin: 0 20px;
+  width: 150px;
+}
+
+.ItemAddForm input {
   margin-left: 20px;
-  width: 100px;
 }

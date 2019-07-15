@@ -33,7 +33,6 @@ export default class App extends Component {
   };
 
   addItem = (text) => {
-
     const newItem = {
       id: this.maxId++,
       label: text,
@@ -50,17 +49,43 @@ export default class App extends Component {
   };
 
   onToggleDone = (id) => {
-    console.log("done", id);
+    this.setState(({ toDoData }) => {
+      const idx = toDoData.findIndex((el) => el.id === id);
+      const oldItem = toDoData[idx];
+      const newItem = { ...oldItem, done: !oldItem.done }
+      
+      const newArray = [
+        ...toDoData.slice(0, idx), 
+        newItem, 
+        ...toDoData.slice(idx+1)
+      ];
+
+      return {
+        toDoData: newArray
+      }
+    });
   };
 
   onToggleImportant = (id) => {
-    console.log("important", id);
+    this.setState(({ toDoData }) => {
+      const idx = toDoData.findIndex((el) => el.id === id);
+      const oldItem = toDoData[idx];
+      const newItem = { ...oldItem, important: !oldItem.important };
+
+      return {
+        toDoData: [ ...toDoData.slice(0, idx), newItem, ...toDoData.slice(idx +1) ]
+      }
+    })
   };
 
   render() {
+    const { toDoData } = this.state;
+    const doneCount = toDoData.filter((el) => el.done).length;
+    const toDoCount = toDoData.length - doneCount;
+    
     return(
       <div className="App">
-        <AppHeader />
+        <AppHeader toDoCount={toDoCount} doneCount={doneCount} />
         <SearchPanel />
         <ItemStatusFilter />
         <ToDoList 
