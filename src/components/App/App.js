@@ -17,7 +17,8 @@ export default class App extends Component {
       { id: 1, label: 'Drink Coffee', important: false },
       { id: 2, label: 'Play Football', important: true },
       { id: 3, label: 'Sleep', important: false }
-    ]
+    ],
+    term: ''
   };
 
   deleteItem = (id) => {
@@ -78,18 +79,34 @@ export default class App extends Component {
     })
   };
 
+  onSearchChange = (term) => {
+    this.setState({ term })
+  };
+
+  search(items, term) {
+    if (term.length === 0) {
+      return items;
+    }
+
+    return items.filter((item) => {
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  }
+
   render() {
-    const { toDoData } = this.state;
+    const { toDoData, term } = this.state;
+    const visibleItems = this.search(toDoData, term);
+
     const doneCount = toDoData.filter((el) => el.done).length;
     const toDoCount = toDoData.length - doneCount;
-    
+
     return(
       <div className="App">
         <AppHeader toDoCount={toDoCount} doneCount={doneCount} />
-        <SearchPanel />
+        <SearchPanel onSearchChange={this.onSearchChange} />
         <ItemStatusFilter />
         <ToDoList 
-          todos = { this.state.toDoData } 
+          todos = { visibleItems } 
           onDeleted={ this.deleteItem} 
           onToggleDone={this.onToggleDone}
           onToggleImportant={this.onToggleImportant} 
